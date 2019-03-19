@@ -43,8 +43,12 @@ except ImportError:
 
 class TestAirflowKubernetesScheduler(unittest.TestCase):
     @staticmethod
-    def _gen_random_string(str_len):
-        return ''.join([random.choice(string.printable) for _ in range(str_len)])
+    def _gen_random_string(seed, str_len):
+        char_list = []
+        for char_seed in range(str_len):
+            random.seed(str(seed) * char_seed)
+            char_list.append(random.choice(string.printable))
+        return ''.join(char_list)
 
     def _cases(self):
         cases = [
@@ -56,8 +60,8 @@ class TestAirflowKubernetesScheduler(unittest.TestCase):
         ]
 
         cases.extend([
-            (self._gen_random_string(200), self._gen_random_string(200))
-            for _ in range(100)
+            (self._gen_random_string(seed, 200), self._gen_random_string(seed, 200))
+            for seed in range(100)
         ])
 
         return cases
