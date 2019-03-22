@@ -94,6 +94,16 @@ class TestAirflowKubernetesScheduler(unittest.TestCase):
             self.assertTrue(self._is_safe_label_value(safe_dag_id))
             safe_task_id = AirflowKubernetesScheduler._make_safe_label_value(task_id)
             self.assertTrue(self._is_safe_label_value(safe_task_id))
+            id = "my_dag_id"
+            self.assertEqual(
+                id,
+                AirflowKubernetesScheduler._make_safe_label_value(id)
+            )
+            id = "my_dag_id_" + "a"*64
+            self.assertEqual(
+                "my_dag_id_" + "a"*43 + "-0ce114c45",
+                AirflowKubernetesScheduler._make_safe_label_value(id)
+            )
 
     @unittest.skipIf(AirflowKubernetesScheduler is None,
                      "kubernetes python package is not installed")
