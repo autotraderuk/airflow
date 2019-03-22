@@ -99,9 +99,9 @@ class TestAirflowKubernetesScheduler(unittest.TestCase):
                 id,
                 AirflowKubernetesScheduler._make_safe_label_value(id)
             )
-            id = "my_dag_id_" + "a"*64
+            id = "my_dag_id_" + "a" * 64
             self.assertEqual(
-                "my_dag_id_" + "a"*43 + "-0ce114c45",
+                "my_dag_id_" + "a" * 43 + "-0ce114c45",
                 AirflowKubernetesScheduler._make_safe_label_value(id)
             )
 
